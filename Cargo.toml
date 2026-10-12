@@ -1,0 +1,41 @@
+[package]
+name = "is31fl3236"
+version = "0.1.0"
+edition = "2024"
+# Tested in CI (.github/workflows/ci.yml, job `msrv`).
+rust-version = "1.85"
+description = "no_std embedded-hal driver for the Lumissil IS31FL3236 LED driver and its relatives IS31FL3236A, IS32FL3236A, IS31FL3235 and IS31FL3235A"
+license = "MIT OR Apache-2.0"
+authors = ["Manuel Schönlaub"]
+repository = "https://github.com/mschoenlaub/is31fl3236"
+readme = "README.md"
+keywords = ["embedded-hal-driver", "led", "pwm", "is31fl3236", "no-std"]
+categories = ["embedded", "no-std", "hardware-support"]
+include = ["src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE-MIT", "LICENSE-APACHE"]
+
+[package.metadata.docs.rs]
+all-features = true
+
+[features]
+# The `embedded-hal-async` driver, `asynch::Is31fl3236Async`. Off by default.
+async = ["dep:embedded-hal-async"]
+
+[dependencies]
+embedded-hal = "1.0"
+embedded-hal-async = { version = "1.0", optional = true }
+
+[dev-dependencies]
+# The async mock tests need the mock's async impls and something to run a future to completion on
+# the host; embassy-futures' `block_on` is a dependency-free few lines, the smallest such thing.
+embedded-hal-mock = { version = "0.11", default-features = false, features = ["eh1", "embedded-hal-async"] }
+embassy-futures = "0.1"
+# Self dev-dependency with `async` on, so that a plain `cargo test` also builds and tests the
+# async driver. Path-only dev-dependencies are dropped from the published manifest.
+is31fl3236 = { path = ".", features = ["async"] }
+
+[lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
