@@ -113,6 +113,15 @@ their datasheets and pinned by mock tests; they have not run on a chip yet.
 driver, tests of the byte encoding for every variant, and this README's examples as doctests,
 including one that checks `set_output_frequency` does not compile on the plain IS31FL3236.
 
+## Related crates
+
+- [`is31fl3218`](https://crates.io/crates/is31fl3218) drives the 18-channel IS31FL3218, the
+  smaller sibling with the same register style, over `embedded-hal-async` only.
+- [`is31fl32xx`](https://crates.io/crates/is31fl32xx) drives the IS31FL3205 and IS31FL3237, which
+  have 16-bit PWM and per-channel scaling registers: a different register map, not this family.
+- [`is31fl3731`](https://crates.io/crates/is31fl3731), [`is31fl3741`](https://crates.io/crates/is31fl3741)
+  and [`is31fl3743b`](https://crates.io/crates/is31fl3743b) drive Lumissil's matrix controllers.
+
 ## Sources
 
 - Lumissil, [IS31FL3236](https://www.lumissil.com/assets/pdf/core/IS31FL3236_DS.pdf), Rev. H, 2021
